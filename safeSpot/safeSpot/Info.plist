@@ -2,6 +2,12 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>Auth0Domain</key>
+	<string>sgb.auth0.com</string>
+	<key>LSApplicationCategoryType</key>
+	<string></string>
+	<key>Auth0ClientId</key>
+	<string>7sYOnS41HCH3qP8LhRT6iaOD1hjof78L</string>
 	<key>MQApplicationKey</key>
 	<string>DyA59wjISQgcXIu3gE8VBQGy78NE8xJZ</string>
 	<key>CFBundleDevelopmentRegion</key>
