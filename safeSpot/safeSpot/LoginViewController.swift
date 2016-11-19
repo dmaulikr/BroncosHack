@@ -8,6 +8,7 @@
 
 import UIKit
 import Lock
+import Auth0
 
 class LoginViewController: UIViewController {
 
@@ -27,10 +28,9 @@ class LoginViewController: UIViewController {
             // Do something with token  profile. e.g.: save them.
             // Lock will not save these objects for you.
             
-//            self.usernameLabel.text = profile.name
-//            self.emailLabel.text = profile.email
-//            controller.sharedInstance.accessToken = token.accessToken
-            
+           // self.usernameLabel.text = profile.name
+            //self.emailLabel.text = profile.email
+           // controller.sharedInstance.accessToken = token.accessToken
             // Don't forget to dismiss the Lock controller
             print("profile: ", profile, " token:", token)
             // MyApplication.sharedInstance.accessToken = token.accessToken
