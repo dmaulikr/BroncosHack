@@ -2,6 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>&quot;SafeSpot would like to use your current location&quot;</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>&quot;SafeSpot would like to use your current location&quot;</string>
 	<key>Auth0Domain</key>
 	<string>sgb.auth0.com</string>
 	<key>LSApplicationCategoryType</key>
