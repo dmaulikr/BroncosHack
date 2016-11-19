@@ -7,11 +7,11 @@
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>&quot;SafeSpot would like to use your current location&quot;</string>
 	<key>Auth0Domain</key>
-	<string>sgb.auth0.com</string>
+	<string>safespot.auth0.com</string>
 	<key>LSApplicationCategoryType</key>
 	<string></string>
 	<key>Auth0ClientId</key>
-	<string>7sYOnS41HCH3qP8LhRT6iaOD1hjof78L</string>
+	<string>RbtvtVFwa9IHdC7VJ8gsR35BvNou6PMJ</string>
 	<key>MQApplicationKey</key>
 	<string>DyA59wjISQgcXIu3gE8VBQGy78NE8xJZ</string>
 	<key>CFBundleDevelopmentRegion</key>
