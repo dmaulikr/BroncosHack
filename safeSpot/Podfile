@@ -6,7 +6,7 @@ target 'safeSpot' do
   use_frameworks!
 
   # Pods for safeSpot
-source 'https://github.com/MapQuest/podspecs-ios.git'
-pod 'MapQuestMaps', '~> 3.2.1-1.3'
-#pod 'Firebase/Core'
+#source 'https://github.com/MapQuest/podspecs-ios.git'
+#pod 'MapQuestMaps', '~> 3.2.1-1.3'
+pod 'Firebase/Core'
 end
