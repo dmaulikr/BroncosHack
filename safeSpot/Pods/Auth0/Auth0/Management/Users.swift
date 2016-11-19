@@ -241,5 +241,5 @@ public struct Users {
 
 private func components(baseURL: NSURL, path: String) -> NSURLComponents {
     let url = baseURL.URLByAppendingPathComponent(path)
-    return NSURLComponents(URL: url, resolvingAgainstBaseURL: true)!
+    return NSURLComponents(URL: url!, resolvingAgainstBaseURL: true)!
 }

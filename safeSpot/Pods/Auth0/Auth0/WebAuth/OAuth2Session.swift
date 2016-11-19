@@ -66,7 +66,7 @@ class OAuth2Session: NSObject {
      - returns: `true` if the url completed (successfuly or not) this session, `false` otherwise
      */
     func resume(url: NSURL, options: [String: AnyObject] = [:]) -> Bool {
-        guard url.absoluteString.lowercaseString.hasPrefix(self.redirectURL.absoluteString.lowercaseString) else { return false }
+        guard url.absoluteString!.lowercaseString.hasPrefix(self.redirectURL.absoluteString!.lowercaseString) else { return false }
 
         guard
             let components = NSURLComponents(URL: url, resolvingAgainstBaseURL: true)
