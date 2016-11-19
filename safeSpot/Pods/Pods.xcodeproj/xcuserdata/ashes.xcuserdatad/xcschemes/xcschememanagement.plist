@@ -4,7 +4,32 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>AFNetworking.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Auth0.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>GoogleToolboxForMac.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Lock-Auth0.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Lock.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Masonry.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -22,7 +47,32 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>3927986840C8DF372289E073BCC20B8A</key>
+		<key>73C98B707998116B31FDA6D3B5B31709</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>CD9EF453F4C2AB5CA5E903D9531C23DA</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>CF671F7E57B92905F1CC91D036D6B4A7</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>D174D895F0A5D625DE64DD8A44B6A442</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>D8BFDCC12B845F10193F8C9B198DA11A</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>FD3FC84931160C8C7D39495C3F678249</key>
 		<dict>
 			<key>primary</key>
 			<true/>
