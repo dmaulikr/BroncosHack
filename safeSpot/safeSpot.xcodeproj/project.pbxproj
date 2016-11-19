@@ -13,6 +13,7 @@
 		54AD1CF61DE00A10001D71BB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 54AD1CF51DE00A10001D71BB /* Assets.xcassets */; };
 		54AD1CF91DE00A10001D71BB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 54AD1CF71DE00A10001D71BB /* LaunchScreen.storyboard */; };
 		7B5B280EAD1B2071843DF122 /* Pods_safeSpot.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D717815A609EE81F0B3F6082 /* Pods_safeSpot.framework */; };
+		7D0EA5D41DE0B25800D4A168 /* Mapbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D0EA5D31DE0B25800D4A168 /* Mapbox.framework */; };
 		7D334D701DE06F0F00D33FE2 /* MapQuestMaps-3.2.1-1.3 in Resources */ = {isa = PBXBuildFile; fileRef = 7D334D6F1DE06F0F00D33FE2 /* MapQuestMaps-3.2.1-1.3 */; };
 		7D334D721DE075F100D33FE2 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D334D711DE075F100D33FE2 /* LoginViewController.swift */; };
 		7D88E0D71DE02CB700F9B728 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7D88E0D61DE02CB700F9B728 /* GoogleService-Info.plist */; };
@@ -27,6 +28,7 @@
 		54AD1CF81DE00A10001D71BB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		54AD1CFA1DE00A10001D71BB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6F3044D2E95D4DD6DC3F2486 /* Pods-safeSpot.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-safeSpot.release.xcconfig"; path = "Pods/Target Support Files/Pods-safeSpot/Pods-safeSpot.release.xcconfig"; sourceTree = "<group>"; };
+		7D0EA5D31DE0B25800D4A168 /* Mapbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Mapbox.framework; path = "MapQuestMaps-3.2.1-1.3/Mapbox.framework"; sourceTree = "<group>"; };
 		7D334D6F1DE06F0F00D33FE2 /* MapQuestMaps-3.2.1-1.3 */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "MapQuestMaps-3.2.1-1.3"; sourceTree = "<group>"; };
 		7D334D711DE075F100D33FE2 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		7D88E0D61DE02CB700F9B728 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "safeSpot/GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -40,6 +42,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7B5B280EAD1B2071843DF122 /* Pods_safeSpot.framework in Frameworks */,
+				7D0EA5D41DE0B25800D4A168 /* Mapbox.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -83,6 +86,7 @@
 		9352808B00A24943F342BF91 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7D0EA5D31DE0B25800D4A168 /* Mapbox.framework */,
 				D717815A609EE81F0B3F6082 /* Pods_safeSpot.framework */,
 			);
 			name = Frameworks;
@@ -348,6 +352,10 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 32C86W6J58;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/MapQuestMaps-3.2.1-1.3",
+				);
 				INFOPLIST_FILE = safeSpot/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = broncosHackathon.safeSpot;
@@ -365,6 +373,10 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 32C86W6J58;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/MapQuestMaps-3.2.1-1.3",
+				);
 				INFOPLIST_FILE = safeSpot/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = broncosHackathon.safeSpot;

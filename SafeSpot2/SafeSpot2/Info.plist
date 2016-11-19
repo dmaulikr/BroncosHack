@@ -2,20 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>FirebaseAutomaticScreenReportingEnabled</key>
-	<false/>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>&quot;SafeSpot would like to use your current location&quot;</string>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>&quot;SafeSpot would like to use your current location&quot;</string>
-	<key>Auth0Domain</key>
-	<string>safespot.auth0.com</string>
-	<key>LSApplicationCategoryType</key>
-	<string></string>
-	<key>Auth0ClientId</key>
-	<string>RbtvtVFwa9IHdC7VJ8gsR35BvNou6PMJ</string>
-	<key>MQApplicationKey</key>
-	<string>DyA59wjISQgcXIu3gE8VBQGy78NE8xJZ</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleExecutable</key>
@@ -30,8 +16,6 @@
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
-	<key>CFBundleSignature</key>
-	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>

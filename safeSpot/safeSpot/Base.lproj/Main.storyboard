@@ -53,12 +53,18 @@
                     <view key="view" contentMode="scaleToFill" id="jnx-b7-y4U">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="title" translatesAutoresizingMaskIntoConstraints="NO" id="gvK-uh-uNE">
+                                <rect key="frame" x="37" y="28" width="301" height="160"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6ye-s9-wN8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1168" y="38"/>
+            <point key="canvasLocation" x="-1168.8" y="37.331334332833585"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="roo-qc-RNg">
@@ -76,7 +82,10 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lYI-Su-jVl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-446" y="37"/>
+            <point key="canvasLocation" x="-454" y="37"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="title" width="1366" height="768"/>
+    </resources>
 </document>
