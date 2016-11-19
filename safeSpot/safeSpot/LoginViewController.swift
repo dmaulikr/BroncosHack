@@ -11,6 +11,7 @@ import Lock
 
 class LoginViewController: UIViewController {
 
+    //adding segway to nav controller
     override func viewDidLoad() {
         super.viewDidLoad()
 
