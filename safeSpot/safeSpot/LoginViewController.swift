@@ -14,6 +14,7 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        // adding seg to nav controller
         // Do any additional setup after loading the view.
 
     }
