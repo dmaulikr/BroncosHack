@@ -18,6 +18,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // LOCATION MANAGER STUFF
         self.locationManager.requestAlwaysAuthorization()
         self.locationManager.requestWhenInUseAuthorization()
         
@@ -26,15 +27,26 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
             locationManager.startUpdatingLocation()
         }
+        
+        // MAP STUFF
         mapView?.mapType = .Standard
         let span = MKCoordinateSpanMake(0.1, 0.1)
         let region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: (locationManager.location?.coordinate.latitude)!, longitude: (locationManager.location?.coordinate.longitude)!), span: span)
         mapView.setRegion(region, animated: true)
+        
+        // CUSTOM HEADER IMAGE
+        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 150, height: 40))
+        imageView.contentMode = .ScaleAspectFit
+        let image = UIImage(named: "title")
+        imageView.image = image
+        navigationItem.titleView = imageView
     }
     
+    
+    // LOCATION MANAGER DELEGATE METHOD
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let locValue:CLLocationCoordinate2D = manager.location!.coordinate
-//        print("locations = \(locValue.latitude) \(locValue.longitude)")
+        print("locations = \(locValue.latitude) \(locValue.longitude)")
     }
 
     override func didReceiveMemoryWarning() {

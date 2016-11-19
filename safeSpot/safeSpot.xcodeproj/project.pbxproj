@@ -12,11 +12,12 @@
 		54AD1CF41DE00A10001D71BB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 54AD1CF21DE00A10001D71BB /* Main.storyboard */; };
 		54AD1CF61DE00A10001D71BB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 54AD1CF51DE00A10001D71BB /* Assets.xcassets */; };
 		54AD1CF91DE00A10001D71BB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 54AD1CF71DE00A10001D71BB /* LaunchScreen.storyboard */; };
-		C6CBF4AEDEEB1642E3819D87 /* Pods_safeSpot.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1938050DC77F3B45B8DDF2F /* Pods_safeSpot.framework */; };
+		7B5B280EAD1B2071843DF122 /* Pods_safeSpot.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D717815A609EE81F0B3F6082 /* Pods_safeSpot.framework */; };
+		7D88E0D71DE02CB700F9B728 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7D88E0D61DE02CB700F9B728 /* GoogleService-Info.plist */; };
+		7DC388011DE03B10006E9A69 /* Firebase in Resources */ = {isa = PBXBuildFile; fileRef = 7DC388001DE03B10006E9A69 /* Firebase */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		17FE72CFC358D347B9F55665 /* Pods-safeSpot.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-safeSpot.debug.xcconfig"; path = "Pods/Target Support Files/Pods-safeSpot/Pods-safeSpot.debug.xcconfig"; sourceTree = "<group>"; };
 		54AD1CEB1DE00A10001D71BB /* safeSpot.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = safeSpot.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		54AD1CEE1DE00A10001D71BB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		54AD1CF01DE00A10001D71BB /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -24,8 +25,11 @@
 		54AD1CF51DE00A10001D71BB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		54AD1CF81DE00A10001D71BB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		54AD1CFA1DE00A10001D71BB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		9F3BD3C44E073EB1C5754375 /* Pods-safeSpot.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-safeSpot.release.xcconfig"; path = "Pods/Target Support Files/Pods-safeSpot/Pods-safeSpot.release.xcconfig"; sourceTree = "<group>"; };
-		A1938050DC77F3B45B8DDF2F /* Pods_safeSpot.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_safeSpot.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6F3044D2E95D4DD6DC3F2486 /* Pods-safeSpot.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-safeSpot.release.xcconfig"; path = "Pods/Target Support Files/Pods-safeSpot/Pods-safeSpot.release.xcconfig"; sourceTree = "<group>"; };
+		7D88E0D61DE02CB700F9B728 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "safeSpot/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		7DC388001DE03B10006E9A69 /* Firebase */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Firebase; sourceTree = "<group>"; };
+		BE58257A244D5B6A81EF87E0 /* Pods-safeSpot.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-safeSpot.debug.xcconfig"; path = "Pods/Target Support Files/Pods-safeSpot/Pods-safeSpot.debug.xcconfig"; sourceTree = "<group>"; };
+		D717815A609EE81F0B3F6082 /* Pods_safeSpot.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_safeSpot.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -33,29 +37,22 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C6CBF4AEDEEB1642E3819D87 /* Pods_safeSpot.framework in Frameworks */,
+				7B5B280EAD1B2071843DF122 /* Pods_safeSpot.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		32D5A97457EC49E92AEDBC81 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				17FE72CFC358D347B9F55665 /* Pods-safeSpot.debug.xcconfig */,
-				9F3BD3C44E073EB1C5754375 /* Pods-safeSpot.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
 		54AD1CE21DE00A10001D71BB = {
 			isa = PBXGroup;
 			children = (
+				7DC388001DE03B10006E9A69 /* Firebase */,
+				7D88E0D61DE02CB700F9B728 /* GoogleService-Info.plist */,
 				54AD1CED1DE00A10001D71BB /* safeSpot */,
 				54AD1CEC1DE00A10001D71BB /* Products */,
-				32D5A97457EC49E92AEDBC81 /* Pods */,
 				9352808B00A24943F342BF91 /* Frameworks */,
+				FFFEE945BB6C129175583CF0 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -83,9 +80,18 @@
 		9352808B00A24943F342BF91 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				A1938050DC77F3B45B8DDF2F /* Pods_safeSpot.framework */,
+				D717815A609EE81F0B3F6082 /* Pods_safeSpot.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		FFFEE945BB6C129175583CF0 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				BE58257A244D5B6A81EF87E0 /* Pods-safeSpot.debug.xcconfig */,
+				6F3044D2E95D4DD6DC3F2486 /* Pods-safeSpot.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -150,7 +156,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7DC388011DE03B10006E9A69 /* Firebase in Resources */,
 				54AD1CF91DE00A10001D71BB /* LaunchScreen.storyboard in Resources */,
+				7D88E0D71DE02CB700F9B728 /* GoogleService-Info.plist in Resources */,
 				54AD1CF61DE00A10001D71BB /* Assets.xcassets in Resources */,
 				54AD1CF41DE00A10001D71BB /* Main.storyboard in Resources */,
 			);
@@ -330,7 +338,7 @@
 		};
 		54AD1CFE1DE00A10001D71BB /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 17FE72CFC358D347B9F55665 /* Pods-safeSpot.debug.xcconfig */;
+			baseConfigurationReference = BE58257A244D5B6A81EF87E0 /* Pods-safeSpot.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -347,7 +355,7 @@
 		};
 		54AD1CFF1DE00A10001D71BB /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9F3BD3C44E073EB1C5754375 /* Pods-safeSpot.release.xcconfig */;
+			baseConfigurationReference = 6F3044D2E95D4DD6DC3F2486 /* Pods-safeSpot.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
