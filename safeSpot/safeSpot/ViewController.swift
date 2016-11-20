@@ -19,12 +19,21 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet weak var searchBar: UISearchBar!
     var ref = FIRDatabase.database().reference()
     
+    var filteredSearch = [Search]()
+    var items = [Search]()
     
+    let searchController = UISearchController(searchResultsController: nil)
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // LOCATION MANAGER STUFF
+        // SEARCH BAR
+        searchController.searchResultsUpdater = self
+        searchController.dimsBackgroundDuringPresentation = false
+        definesPresentationContext = true
+        
+        
+        // LOCATION MANAGER
         self.locationManager.requestAlwaysAuthorization()
         self.locationManager.requestWhenInUseAuthorization()
         
@@ -44,7 +53,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         searchBar.layer.zPosition = 1
         let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 200, height: 70))
         imageView.contentMode = .ScaleAspectFit
-        let image = UIImage(named: "title")
+        let image = UIImage(named: "navbar")
         imageView.image = image
         navBar.titleView = imageView
         
@@ -59,8 +68,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             for each in keysArray {
                 let lat = place![each]!["lat"] as! Double
                 let long = place![each]!["long"] as! Double
+                items.append(Search(tag: place![each]!["tags"], name: place![each]!["name"], address: place![each]!["street_address"], zipcode: place![each]!["zipcode"], lat: place![each]!["lat"], long: place![each]!["long"]))
                 
-//                print(place![each]!["lat"])
                 
                 let pinLocation = CLLocationCoordinate2DMake(lat,long)
                 // Drop a pin
@@ -72,7 +81,13 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         })
     }
     
-    
+    func filterContentForSearchText(searchText: String, scope: String = "All") {
+        filteredSearch = items.filter { item in
+            return item.name.lowercaseString.containsString(searchText.lowercaseString) || item.address.lowercaseString.containsString(searchText.lowercaseString) || item.tag.lowercaseString.containsString(searchText.lowercaseString) || item.zipcode.lowercaseString.containsString(searchText.lowercaseString)
+        }
+        
+//        tableView.reloadData()
+    }
     
     // LOCATION MANAGER DELEGATE METHOD
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -88,3 +103,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 
 }
 
+
+extension ViewController: UISearchResultsUpdating {
+    func updateSearchResultsForSearchController(searchController: UISearchController) {
+        filterContentForSearchText(searchController.searchBar.text!)
+    }
+}
