@@ -17,6 +17,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     let locationManager = CLLocationManager()
     @IBOutlet weak var navBar: UINavigationItem!
     @IBOutlet weak var searchBar: UISearchBar!
+//    @IBOutlet weak var searchController: UISearchController!
+
     var ref = FIRDatabase.database().reference()
     
     var filteredSearch = [Search]()
@@ -24,7 +26,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     var items = [Search]()
     var shouldShowSearchResults = false
     
-    let searchController = UISearchController(searchResultsController: nil)
+    var searchController = UISearchController(searchResultsController: nil)
     
     
     var tableView: UITableView  =   UITableView()
@@ -45,8 +47,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         searchController.dimsBackgroundDuringPresentation = true
         searchController.searchBar.placeholder = "Search here..."
         searchController.searchBar.delegate = self
+//        searchController.searchBar.delegate = searchBar
         definesPresentationContext = true
-//        tableView.tableHeaderView = searchController.searchBar
+        tableView.tableHeaderView = searchController.searchBar
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(ViewController.dismissKeyboard))
         view.addGestureRecognizer(tap)
         
@@ -103,7 +106,13 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
                 dropPin.title = name
                 self.mapView.addAnnotation(dropPin)
             }
+//            self.filteredSearch = self.items
         })
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(false)
+        filteredSearch = items
     }
     
     
@@ -116,7 +125,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     
     
     func filterContentForSearchText(searchText: String, scope: String = "All") {
-        
+        print("in here")
         
         filteredSearch = items.filter { item in
             
@@ -138,6 +147,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     }
     
     func updateSearchResultsForSearchController(searchController: UISearchController) {
+        print("jk in here")
         let searchText = searchController.searchBar.text
         
         filteredSearch = items.filter { item in
@@ -160,6 +170,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     }
     
     func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
+        print("aight fer real doe. in here")
         shouldShowSearchResults = true
         tableView.reloadData()
     }
