@@ -19,7 +19,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
 //    @IBOutlet weak var searchBar: UISearchBar!
 //    @IBOutlet weak var searchController: UISearchController!
     var searchController: UISearchController!
-    
+    var token : AnyObject!
     @IBOutlet weak var searchBar: UISearchBar!
     
     var customSearchController: CustomSearchController!
@@ -38,8 +38,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        configureCustomSearchController()
-        configureSearchController()
+        configureCustomSearchController()
         // TABLE VIEW
         tableView.frame = CGRectMake(0, 50, 320, 200);
         tableView.delegate = self
@@ -127,25 +126,33 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         view.endEditing(true)
     }
     
-    func configureSearchController() {
-        // Initialize and perform a minimum configuration to the search controller.
-        searchController = UISearchController(searchResultsController: nil)
-        searchController.searchResultsUpdater = self
-        searchController.dimsBackgroundDuringPresentation = false
-        searchController.searchBar.placeholder = "Search here..."
-        searchController.searchBar.delegate = self
-        searchController.searchBar.sizeToFit()
-        
-        // Place the search bar view to the tableview headerview.
-        tableView.tableHeaderView = searchController.searchBar
-    }
+//    func configureSearchController() {
+//        // Initialize and perform a minimum configuration to the search controller.
+//        searchController = UISearchController(searchResultsController: nil)
+//        searchController.searchResultsUpdater = self
+//        searchController.dimsBackgroundDuringPresentation = false
+//        searchController.searchBar.placeholder = "Search here..."
+//        searchController.searchBar.delegate = self
+//        searchController.searchBar.sizeToFit()
+//        
+//        // Place the search bar view to the tableview headerview.
+//        tableView.tableHeaderView = searchController.searchBar
+//    }
+    
+//    func configureCustomSearchController() {
+////        customSearchController = CustomSearchController(searchResultsController: self, searchBarFrame: CGRectMake(0.0, 0.0, tblSearchResults.frame.size.width, 50.0), searchBarFont: UIFont(name: "Futura", size: 16.0)!, searchBarTextColor: UIColor.orangeColor(), searchBarTintColor: UIColor.blackColor())
+//        
+////        tableView.tableHeaderView = customSearchController.customSearchBar
+//        customSearchController.customDelegate = self
+//    }
     
     func configureCustomSearchController() {
-//        customSearchController = CustomSearchController(searchResultsController: self, searchBarFrame: CGRectMake(0.0, 0.0, tblSearchResults.frame.size.width, 50.0), searchBarFont: UIFont(name: "Futura", size: 16.0)!, searchBarTextColor: UIColor.orangeColor(), searchBarTintColor: UIColor.blackColor())
+        customSearchController = CustomSearchController(searchResultsController: self, searchBarFrame: CGRectMake(0.0, 0.0, tableView.frame.size.width, 50.0), searchBarTintColor: UIColor.blackColor())
         
-        customSearchController.customSearchBar.placeholder = "Search in this awesome bar..."
+//        customSearchController.customSearchBar.placeholder = "Search in this awesome bar..."
         tableView.tableHeaderView = customSearchController.customSearchBar
         customSearchController.customDelegate = self
+        
     }
     
     func didStartSearching() {
@@ -165,19 +172,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     }
     
     func didChangeSearchText(searchText: String) {
-        // Filter the data array and get only those countries that match the search text.
-//        filteredSearch = dataArray.filter({ (item) -> Bool in
-//            let countryText: NSString = item
-//            
-//            return (countryText.rangeOfString(searchText, options: NSStringCompareOptions.CaseInsensitiveSearch).location) != NSNotFound
-//        })
         
-        // Reload the tableview.
-//        tableView.reloadData()
         updateSearchResultsForSearchController(searchController)
     }
-    
-    
     
     func updateSearchResultsForSearchController(searchController: UISearchController) {
         let searchText = searchController.searchBar.text
