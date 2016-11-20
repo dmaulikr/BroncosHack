@@ -11,7 +11,7 @@ import MapKit
 import CoreLocation
 import Firebase
 
-class ViewController: UIViewController, CLLocationManagerDelegate {
+class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var mapView: MKMapView!
     let locationManager = CLLocationManager()
@@ -24,14 +24,27 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     
     let searchController = UISearchController(searchResultsController: nil)
     
+    
+    var tableView: UITableView  =   UITableView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+        // TABLE VIEW
+        tableView.frame = CGRectMake(0, 50, 320, 200);
+        tableView.delegate = self
+        tableView.dataSource = self
+        
+        tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "cell")
         
         // SEARCH BAR
         searchController.searchResultsUpdater = self
         searchController.dimsBackgroundDuringPresentation = false
         definesPresentationContext = true
-        
+        tableView.tableHeaderView = searchController.searchBar
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(ViewController.dismissKeyboard))
+        view.addGestureRecognizer(tap)
         
         // LOCATION MANAGER
         self.locationManager.requestAlwaysAuthorization()
@@ -89,7 +102,18 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         })
     }
     
+    
+    
+    // Dismiss keyboard
+    func dismissKeyboard() {
+        view.endEditing(true)
+    }
+    
+    
+    
     func filterContentForSearchText(searchText: String, scope: String = "All") {
+        
+        
         filteredSearch = items.filter { item in
             
             return item.name.lowercaseString.containsString(searchText.lowercaseString) || item.address.lowercaseString.containsString(searchText.lowercaseString) || item.tags.lowercaseString.containsString(searchText.lowercaseString) || String(item.zipcode).containsString(searchText.lowercaseString)
@@ -98,6 +122,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         }
         mapView.removeAnnotations(mapView.annotations)
         for item in filteredSearch{
+            print(item.name)
             let pinLocation = CLLocationCoordinate2DMake(item.lat,item.long)
                 // Drop a pin based on search
                 let dropPin = MKPointAnnotation()
@@ -119,12 +144,43 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         // Dispose of any resources that can be recreated.
     }
 
-
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if searchController.active && searchController.searchBar.text != "" {
+            return filteredSearch.count
+        }
+        return items.count
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        
+        let cell:UITableViewCell = tableView.dequeueReusableCellWithIdentifier("cell")! as UITableViewCell
+        
+        let candy: Search
+        if searchController.active && searchController.searchBar.text != "" {
+            candy = filteredSearch[indexPath.row]
+        } else {
+            candy = items[indexPath.row]
+        }
+        
+        
+        
+        cell.textLabel?.text = candy.name
+        
+        return cell
+        
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        print("You selected cell #\(indexPath.row)!")
+    }
 }
 
 
 extension ViewController: UISearchResultsUpdating {
     func updateSearchResultsForSearchController(searchController: UISearchController) {
         filterContentForSearchText(searchController.searchBar.text!)
+        tableView.layer.zPosition = 1
+        self.view.addSubview(tableView)
+        
     }
 }
