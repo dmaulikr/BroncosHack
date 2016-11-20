@@ -18,6 +18,7 @@
 		7D88E0D71DE02CB700F9B728 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7D88E0D61DE02CB700F9B728 /* GoogleService-Info.plist */; };
 		7D96D5EE1DE186EA00BF6D87 /* CustomSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D96D5ED1DE186EA00BF6D87 /* CustomSearchController.swift */; };
 		7D96D5F01DE189D600BF6D87 /* CustomSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D96D5EF1DE189D600BF6D87 /* CustomSearchBar.swift */; };
+		7D96D5F21DE19FEF00BF6D87 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D96D5F11DE19FEF00BF6D87 /* DetailViewController.swift */; };
 		7DE1C9F71DE14FB1006267E0 /* Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DE1C9F61DE14FB1006267E0 /* Search.swift */; };
 /* End PBXBuildFile section */
 
@@ -35,6 +36,7 @@
 		7D88E0D61DE02CB700F9B728 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "safeSpot/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		7D96D5ED1DE186EA00BF6D87 /* CustomSearchController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomSearchController.swift; sourceTree = "<group>"; };
 		7D96D5EF1DE189D600BF6D87 /* CustomSearchBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CustomSearchBar.swift; path = ../CustomSearchBar.swift; sourceTree = "<group>"; };
+		7D96D5F11DE19FEF00BF6D87 /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		7DE1C9F61DE14FB1006267E0 /* Search.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Search.swift; sourceTree = "<group>"; };
 		BE58257A244D5B6A81EF87E0 /* Pods-safeSpot.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-safeSpot.debug.xcconfig"; path = "Pods/Target Support Files/Pods-safeSpot/Pods-safeSpot.debug.xcconfig"; sourceTree = "<group>"; };
 		D717815A609EE81F0B3F6082 /* Pods_safeSpot.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_safeSpot.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -80,6 +82,7 @@
 				54AD1CF01DE00A10001D71BB /* ViewController.swift */,
 				7DE1C9F61DE14FB1006267E0 /* Search.swift */,
 				54AD1CF21DE00A10001D71BB /* Main.storyboard */,
+				7D96D5F11DE19FEF00BF6D87 /* DetailViewController.swift */,
 				7D96D5ED1DE186EA00BF6D87 /* CustomSearchController.swift */,
 				54AD1CF51DE00A10001D71BB /* Assets.xcassets */,
 				54AD1CF71DE00A10001D71BB /* LaunchScreen.storyboard */,
@@ -237,6 +240,7 @@
 				7DE1C9F71DE14FB1006267E0 /* Search.swift in Sources */,
 				54AD1CF11DE00A10001D71BB /* ViewController.swift in Sources */,
 				54AD1CEF1DE00A10001D71BB /* AppDelegate.swift in Sources */,
+				7D96D5F21DE19FEF00BF6D87 /* DetailViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
