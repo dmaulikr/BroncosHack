@@ -8,43 +8,37 @@
 
 import UIKit
 import Lock
+import Auth0
 
 class LoginViewController: UIViewController {
+    
+    var check = false
+    
 
-    //adding segway to nav controller
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-
     }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(false)
+        if check == false {
         let controller = A0Lock.sharedLock().newLockViewController()
-        controller.closable = false
+        
+        controller.closable = true
         controller.onAuthenticationBlock = { profile, token in
-            // Do something with token  profile. e.g.: save them.
-            // Lock will not save these objects for you.
             
-//            self.usernameLabel.text = profile.name
-//            self.emailLabel.text = profile.email
-//            controller.sharedInstance.accessToken = token.accessToken
+            controller.dismissViewControllerAnimated(true, completion: nil)
             
-            // Don't forget to dismiss the Lock controller
-            print("profile: ", profile, " token:", token)
-            // MyApplication.sharedInstance.accessToken = token.accessToken
-//            controller.dismissViewControllerAnimated(true, completion: nil)
-            
-//            let VC1 = self.storyboard?.instantiateViewControllerWithIdentifier("SafeSpot") as! ViewController
-//            let navController = UINavigationController(rootViewController: VC1) // Creating a navigation controller with VC1 at the root of the navigation stack.
-//            self.presentViewController(navController, animated:true, completion: nil)
- 
             let secondViewController = self.storyboard!.instantiateViewControllerWithIdentifier("SafeSpot") as! ViewController
-            self.navigationController!.pushViewController(secondViewController, animated: true)
-            
+            secondViewController.token = token
+            self.presentViewController(secondViewController, animated: true, completion: nil)
         }
         A0Lock.sharedLock().presentLockController(controller, fromController: self)
+        check = true
+            
+        } else {
+            self.dismissViewControllerAnimated(true, completion: {});
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -52,15 +46,6 @@ class LoginViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    @IBAction func presentLogin(sender: UIButton) {
     }
-    */
-
 }

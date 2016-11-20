@@ -21,26 +21,81 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="axG-Xd-PYH">
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="axG-Xd-PYH">
                                 <rect key="frame" x="0.0" y="108" width="375" height="559"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </mapView>
-                            <searchBar contentMode="redraw" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RqF-xV-fJz">
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4a6-An-IUz">
+                                <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                                <items>
+                                    <navigationItem id="ofd-ue-S49"/>
+                                </items>
+                            </navigationBar>
+                            <searchBar contentMode="redraw" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BfS-Vs-9cL">
                                 <rect key="frame" x="0.0" y="64" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="Xjh-Ld-a2T"/>
+                                </connections>
                             </searchBar>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="4a6-An-IUz" secondAttribute="trailing" id="Kxo-Lz-oca"/>
+                            <constraint firstItem="4a6-An-IUz" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="LJF-jN-jNy"/>
+                            <constraint firstItem="axG-Xd-PYH" firstAttribute="leading" secondItem="4a6-An-IUz" secondAttribute="leading" id="Zyp-i0-1QA"/>
+                            <constraint firstItem="axG-Xd-PYH" firstAttribute="bottom" secondItem="wfy-db-euE" secondAttribute="top" id="eB6-Py-Gx2"/>
+                            <constraint firstItem="axG-Xd-PYH" firstAttribute="top" secondItem="4a6-An-IUz" secondAttribute="bottom" constant="44" id="eiQ-qq-2fk"/>
+                            <constraint firstItem="axG-Xd-PYH" firstAttribute="trailing" secondItem="4a6-An-IUz" secondAttribute="trailing" id="wE9-vp-bGk"/>
+                            <constraint firstItem="4a6-An-IUz" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="zKE-06-UMg"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="SafeSpot" id="ag8-kL-QhD"/>
                     <connections>
                         <outlet property="mapView" destination="axG-Xd-PYH" id="Aof-Ap-bDJ"/>
+                        <outlet property="navBar" destination="ofd-ue-S49" id="p6c-aO-M9N"/>
+                        <outlet property="searchBar" destination="BfS-Vs-9cL" id="bkj-Rv-KY4"/>
+                        <outlet property="searchDisplayController" destination="mPN-yS-2pB" id="Myh-3a-RDu"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <searchDisplayController id="d2h-6f-GLP">
+                    <connections>
+                        <outlet property="delegate" destination="BYZ-38-t0r" id="ESo-gg-4ud"/>
+                        <outlet property="searchContentsController" destination="BYZ-38-t0r" id="Lld-Oi-vi5"/>
+                        <outlet property="searchResultsDataSource" destination="BYZ-38-t0r" id="TlT-DB-m0R"/>
+                        <outlet property="searchResultsDelegate" destination="BYZ-38-t0r" id="FhE-Gj-NE7"/>
+                    </connections>
+                </searchDisplayController>
+                <searchDisplayController id="mPN-yS-2pB">
+                    <connections>
+                        <outlet property="delegate" destination="BYZ-38-t0r" id="qyE-h1-C1F"/>
+                        <outlet property="searchBar" destination="BfS-Vs-9cL" id="YPg-Ur-K7B"/>
+                        <outlet property="searchContentsController" destination="BYZ-38-t0r" id="c8Z-Lo-YjO"/>
+                        <outlet property="searchResultsDataSource" destination="BYZ-38-t0r" id="mBK-2K-WqO"/>
+                        <outlet property="searchResultsDelegate" destination="BYZ-38-t0r" id="4Pl-89-N9L"/>
+                    </connections>
+                </searchDisplayController>
             </objects>
-            <point key="canvasLocation" x="314" y="36"/>
+            <point key="canvasLocation" x="-369" y="36"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="8vo-p6-lzY">
+            <objects>
+                <viewController id="1nY-Wy-k2V" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="ewe-fS-aXt"/>
+                        <viewControllerLayoutGuide type="bottom" id="RNO-oG-LdR"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="3w6-q6-Mkn">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="K60-ki-D2h" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="380" y="36"/>
         </scene>
         <!--Login View Controller-->
         <scene sceneID="PlL-Rf-sPW">
@@ -55,28 +110,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="showDetail" identifier="initial" id="bsq-fy-eic"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6ye-s9-wN8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1168" y="38"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="roo-qc-RNg">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="yrZ-EB-Mre" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="L2r-Ng-Uyf">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="FQd-ze-6Iz"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="lYI-Su-jVl" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-446" y="37"/>
+            <point key="canvasLocation" x="-1257" y="36"/>
         </scene>
     </scenes>
 </document>

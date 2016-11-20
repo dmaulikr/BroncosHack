@@ -9,16 +9,55 @@
 import UIKit
 import MapKit
 import CoreLocation
+import Firebase
 
-class ViewController: UIViewController, CLLocationManagerDelegate {
+class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource, UISearchResultsUpdating, UISearchBarDelegate, CustomSearchControllerDelegate {
 
     @IBOutlet weak var mapView: MKMapView!
     let locationManager = CLLocationManager()
+    @IBOutlet weak var navBar: UINavigationItem!
+//    @IBOutlet weak var searchBar: UISearchBar!
+//    @IBOutlet weak var searchController: UISearchController!
+    var searchController: UISearchController!
+    var token : AnyObject!
+    @IBOutlet weak var searchBar: UISearchBar!
+    
+    var customSearchController: CustomSearchController!
+    
+    var ref = FIRDatabase.database().reference()
+    
+    var filteredSearch = [Search]()
+    var filteredPlaceKeys = [String]()
+    var items = [Search]()
+    var shouldShowSearchResults = false
+    
+//    var searchController = UISearchController(searchResultsController: nil)
+    
+    
+    var tableView: UITableView  =   UITableView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureCustomSearchController()
+        // TABLE VIEW
+        tableView.frame = CGRectMake(0, 50, 320, 200);
+        tableView.delegate = self
+        tableView.dataSource = self
         
-        // LOCATION MANAGER STUFF
+        
+        
+        // SEARCH BAR
+//        searchController.searchResultsUpdater = self
+//        searchController.dimsBackgroundDuringPresentation = true
+//        searchController.searchBar.placeholder = "Search here..."
+//        searchController.searchBar.delegate = self
+//        searchController.searchBar.delegate = searchBar
+//        definesPresentationContext = true
+//        tableView.tableHeaderView = searchController.searchBar
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(ViewController.dismissKeyboard))
+        view.addGestureRecognizer(tap)
+        
+        // LOCATION MANAGER
         self.locationManager.requestAlwaysAuthorization()
         self.locationManager.requestWhenInUseAuthorization()
         
@@ -35,18 +74,195 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         mapView.setRegion(region, animated: true)
         
         // CUSTOM HEADER IMAGE
-        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 150, height: 40))
+//        searchBar.layer.zPosition = 1
+        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 200, height: 70))
         imageView.contentMode = .ScaleAspectFit
-        let image = UIImage(named: "title")
+        let image = UIImage(named: "navbar")
         imageView.image = image
-        navigationItem.titleView = imageView
+        navBar.titleView = imageView
+        
+        // CONFIGURE DATABASE
+//        ref = FIRDatabase.database().reference()
+        
+        ref.observeSingleEventOfType(.Value, withBlock: { snapshot in
+            if !snapshot.exists() { return }
+            let keysArray = snapshot.value!["places"]!!.allKeys as! [String]
+            
+            let place = snapshot.value!["places"]! as? NSDictionary
+            
+            for each in keysArray {
+                let tags = place![each]!["tags"] as! String
+                let name = place![each]!["name"] as! String
+                let address = place![each]!["street_address"] as! String
+                let zipcode = place![each]!["zipcode"] as! Int
+                let lat = place![each]!["lat"] as! Double
+                let long = place![each]!["long"] as! Double
+                
+                let newPlace = Search(tags: tags, name: name, address: address, zipcode: zipcode, lat: lat, long: long)
+                
+                self.items.append(newPlace)
+                
+                
+                let pinLocation = CLLocationCoordinate2DMake(lat,long)
+                // Drop a pin
+                let dropPin = MKPointAnnotation()
+                dropPin.coordinate = pinLocation
+                dropPin.title = name
+                self.mapView.addAnnotation(dropPin)
+            }
+//            self.filteredSearch = self.items
+        })
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(false)
+        filteredSearch = items
     }
     
     
+    
+    // Dismiss keyboard
+    func dismissKeyboard() {
+        view.endEditing(true)
+    }
+    
+//    func configureSearchController() {
+//        // Initialize and perform a minimum configuration to the search controller.
+//        searchController = UISearchController(searchResultsController: nil)
+//        searchController.searchResultsUpdater = self
+//        searchController.dimsBackgroundDuringPresentation = false
+//        searchController.searchBar.placeholder = "Search here..."
+//        searchController.searchBar.delegate = self
+//        searchController.searchBar.sizeToFit()
+//        
+//        // Place the search bar view to the tableview headerview.
+//        tableView.tableHeaderView = searchController.searchBar
+//    }
+    
+//    func configureCustomSearchController() {
+////        customSearchController = CustomSearchController(searchResultsController: self, searchBarFrame: CGRectMake(0.0, 0.0, tblSearchResults.frame.size.width, 50.0), searchBarFont: UIFont(name: "Futura", size: 16.0)!, searchBarTextColor: UIColor.orangeColor(), searchBarTintColor: UIColor.blackColor())
+//        
+////        tableView.tableHeaderView = customSearchController.customSearchBar
+//        customSearchController.customDelegate = self
+//    }
+    
+    func configureCustomSearchController() {
+        customSearchController = CustomSearchController(searchResultsController: self, searchBarFrame: CGRectMake(0.0, 0.0, tableView.frame.size.width, 50.0), searchBarTintColor: UIColor.blackColor())
+        
+//        customSearchController.customSearchBar.placeholder = "Search in this awesome bar..."
+        tableView.tableHeaderView = customSearchController.customSearchBar
+        customSearchController.customDelegate = self
+        
+    }
+    
+    func didStartSearching() {
+        shouldShowSearchResults = true
+        tableView.reloadData()
+    }
+    
+    func didTapOnSearchButton() {
+        if !shouldShowSearchResults {
+            shouldShowSearchResults = true
+            tableView.reloadData()
+        }
+    }
+    func didTapOnCancelButton() {
+        shouldShowSearchResults = false
+        tableView.reloadData()
+    }
+    
+    func didChangeSearchText(searchText: String) {
+        
+        updateSearchResultsForSearchController(searchController)
+    }
+    
+    func updateSearchResultsForSearchController(searchController: UISearchController) {
+        let searchText = searchController.searchBar.text
+        
+        print("in here")
+        
+        filteredSearch = items.filter { item in
+            
+            return item.name.lowercaseString.containsString(searchText!.lowercaseString) || item.address.lowercaseString.containsString(searchText!.lowercaseString) || item.tags.lowercaseString.containsString(searchText!.lowercaseString) || String(item.zipcode).containsString(searchText!.lowercaseString)
+            
+            //            return false
+        }
+        
+        // Reload the tableview.
+        tableView.reloadData()
+    }
+    
+    
+    /*func filterContentForSearchText(searchText: String, scope: String = "All") {
+        print("in here")
+        
+        filteredSearch = items.filter { item in
+            
+            return item.name.lowercaseString.containsString(searchText.lowercaseString) || item.address.lowercaseString.containsString(searchText.lowercaseString) || item.tags.lowercaseString.containsString(searchText.lowercaseString) || String(item.zipcode).containsString(searchText.lowercaseString)
+ 
+//            return false
+        }
+        mapView.removeAnnotations(mapView.annotations)
+        for item in filteredSearch{
+            print(item.name)
+            let pinLocation = CLLocationCoordinate2DMake(item.lat,item.long)
+                // Drop a pin based on search
+                let dropPin = MKPointAnnotation()
+                dropPin.coordinate = pinLocation
+                dropPin.title = item.name
+                self.mapView.addAnnotation(dropPin)
+        }
+//        tableView.reloadData()
+    }
+    
+    func updateSearchResultsForSearchController(searchController: UISearchController) {
+        print("jk in here")
+        let searchText = searchController.searchBar.text
+        
+        filteredSearch = items.filter { item in
+            
+            return item.name.lowercaseString.containsString(searchText!.lowercaseString) || item.address.lowercaseString.containsString(searchText!.lowercaseString) || item.tags.lowercaseString.containsString(searchText!.lowercaseString) || String(item.zipcode).containsString(searchText!.lowercaseString)
+            
+            //            return false
+        }
+        mapView.removeAnnotations(mapView.annotations)
+        for item in filteredSearch{
+            print(item.name)
+            let pinLocation = CLLocationCoordinate2DMake(item.lat,item.long)
+            // Drop a pin based on search
+            let dropPin = MKPointAnnotation()
+            dropPin.coordinate = pinLocation
+            dropPin.title = item.name
+            self.mapView.addAnnotation(dropPin)
+        }
+        //        tableView.reloadData()
+    }*/
+    
+    /*func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
+        print("aight fer real doe. in here")
+        shouldShowSearchResults = true
+        tableView.reloadData()
+    }
+    
+    
+    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+        shouldShowSearchResults = false
+        tableView.reloadData()
+    }
+    
+    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+        if !shouldShowSearchResults {
+            shouldShowSearchResults = true
+            tableView.reloadData()
+        }
+        
+        searchController.searchBar.resignFirstResponder()
+    }*/
+    
     // LOCATION MANAGER DELEGATE METHOD
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        let locValue:CLLocationCoordinate2D = manager.location!.coordinate
-        print("locations = \(locValue.latitude) \(locValue.longitude)")
+//        let locValue:CLLocationCoordinate2D = manager.location!.coordinate
+//        print("locations = \(locValue.latitude) \(locValue.longitude)")
     }
 
     override func didReceiveMemoryWarning() {
@@ -54,6 +270,49 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         // Dispose of any resources that can be recreated.
     }
 
-
+//    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+//        if shouldShowSearchResults {
+//            return filteredSearch.count
+//        }
+//        else {
+//            return items.count
+//        }
+//    }
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if shouldShowSearchResults {
+            return filteredSearch.count
+        }
+        else {
+            return items.count
+        }
+    }
+    
+//    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+//        let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) 
+//
+//        cell.textLabel?.text = filteredSearch[indexPath.row].name
+//        
+//        return cell
+//    }
+    
+     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "idCell")
+        
+        let cell = tableView.dequeueReusableCellWithIdentifier("idCell", forIndexPath: indexPath)
+        
+        
+        
+        if shouldShowSearchResults {
+            cell.textLabel?.text = filteredSearch[indexPath.row].name
+        }
+        else {
+            cell.textLabel?.text = items[indexPath.row].name
+        }
+     
+        return cell
+     }
+    
+//    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+//        print("You selected cell #\(indexPath.row)!")
+//    }
 }
-
