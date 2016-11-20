@@ -11,14 +11,19 @@ import MapKit
 import CoreLocation
 import Firebase
 
-class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource, UISearchResultsUpdating, UISearchBarDelegate {
+class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource, UISearchResultsUpdating, UISearchBarDelegate, CustomSearchControllerDelegate {
 
     @IBOutlet weak var mapView: MKMapView!
     let locationManager = CLLocationManager()
     @IBOutlet weak var navBar: UINavigationItem!
-    @IBOutlet weak var searchBar: UISearchBar!
+//    @IBOutlet weak var searchBar: UISearchBar!
 //    @IBOutlet weak var searchController: UISearchController!
-
+    var searchController: UISearchController!
+    
+    @IBOutlet weak var searchBar: UISearchBar!
+    
+    var customSearchController: CustomSearchController!
+    
     var ref = FIRDatabase.database().reference()
     
     var filteredSearch = [Search]()
@@ -26,30 +31,30 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     var items = [Search]()
     var shouldShowSearchResults = false
     
-    var searchController = UISearchController(searchResultsController: nil)
+//    var searchController = UISearchController(searchResultsController: nil)
     
     
     var tableView: UITableView  =   UITableView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
+//        configureCustomSearchController()
+        configureSearchController()
         // TABLE VIEW
         tableView.frame = CGRectMake(0, 50, 320, 200);
         tableView.delegate = self
         tableView.dataSource = self
         
-        tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        
         
         // SEARCH BAR
-        searchController.searchResultsUpdater = self
-        searchController.dimsBackgroundDuringPresentation = true
-        searchController.searchBar.placeholder = "Search here..."
-        searchController.searchBar.delegate = self
+//        searchController.searchResultsUpdater = self
+//        searchController.dimsBackgroundDuringPresentation = true
+//        searchController.searchBar.placeholder = "Search here..."
+//        searchController.searchBar.delegate = self
 //        searchController.searchBar.delegate = searchBar
-        definesPresentationContext = true
-        tableView.tableHeaderView = searchController.searchBar
+//        definesPresentationContext = true
+//        tableView.tableHeaderView = searchController.searchBar
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(ViewController.dismissKeyboard))
         view.addGestureRecognizer(tap)
         
@@ -122,9 +127,76 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         view.endEditing(true)
     }
     
+    func configureSearchController() {
+        // Initialize and perform a minimum configuration to the search controller.
+        searchController = UISearchController(searchResultsController: nil)
+        searchController.searchResultsUpdater = self
+        searchController.dimsBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder = "Search here..."
+        searchController.searchBar.delegate = self
+        searchController.searchBar.sizeToFit()
+        
+        // Place the search bar view to the tableview headerview.
+        tableView.tableHeaderView = searchController.searchBar
+    }
+    
+    func configureCustomSearchController() {
+//        customSearchController = CustomSearchController(searchResultsController: self, searchBarFrame: CGRectMake(0.0, 0.0, tblSearchResults.frame.size.width, 50.0), searchBarFont: UIFont(name: "Futura", size: 16.0)!, searchBarTextColor: UIColor.orangeColor(), searchBarTintColor: UIColor.blackColor())
+        
+        customSearchController.customSearchBar.placeholder = "Search in this awesome bar..."
+        tableView.tableHeaderView = customSearchController.customSearchBar
+        customSearchController.customDelegate = self
+    }
+    
+    func didStartSearching() {
+        shouldShowSearchResults = true
+        tableView.reloadData()
+    }
+    
+    func didTapOnSearchButton() {
+        if !shouldShowSearchResults {
+            shouldShowSearchResults = true
+            tableView.reloadData()
+        }
+    }
+    func didTapOnCancelButton() {
+        shouldShowSearchResults = false
+        tableView.reloadData()
+    }
+    
+    func didChangeSearchText(searchText: String) {
+        // Filter the data array and get only those countries that match the search text.
+//        filteredSearch = dataArray.filter({ (item) -> Bool in
+//            let countryText: NSString = item
+//            
+//            return (countryText.rangeOfString(searchText, options: NSStringCompareOptions.CaseInsensitiveSearch).location) != NSNotFound
+//        })
+        
+        // Reload the tableview.
+//        tableView.reloadData()
+        updateSearchResultsForSearchController(searchController)
+    }
     
     
-    func filterContentForSearchText(searchText: String, scope: String = "All") {
+    
+    func updateSearchResultsForSearchController(searchController: UISearchController) {
+        let searchText = searchController.searchBar.text
+        
+        print("in here")
+        
+        filteredSearch = items.filter { item in
+            
+            return item.name.lowercaseString.containsString(searchText!.lowercaseString) || item.address.lowercaseString.containsString(searchText!.lowercaseString) || item.tags.lowercaseString.containsString(searchText!.lowercaseString) || String(item.zipcode).containsString(searchText!.lowercaseString)
+            
+            //            return false
+        }
+        
+        // Reload the tableview.
+        tableView.reloadData()
+    }
+    
+    
+    /*func filterContentForSearchText(searchText: String, scope: String = "All") {
         print("in here")
         
         filteredSearch = items.filter { item in
@@ -167,9 +239,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
             self.mapView.addAnnotation(dropPin)
         }
         //        tableView.reloadData()
-    }
+    }*/
     
-    func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
+    /*func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
         print("aight fer real doe. in here")
         shouldShowSearchResults = true
         tableView.reloadData()
@@ -188,7 +260,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         }
         
         searchController.searchBar.resignFirstResponder()
-    }
+    }*/
     
     // LOCATION MANAGER DELEGATE METHOD
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -201,6 +273,14 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         // Dispose of any resources that can be recreated.
     }
 
+//    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+//        if shouldShowSearchResults {
+//            return filteredSearch.count
+//        }
+//        else {
+//            return items.count
+//        }
+//    }
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if shouldShowSearchResults {
             return filteredSearch.count
@@ -210,16 +290,32 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         }
     }
     
+//    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+//        let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) 
+//
+//        cell.textLabel?.text = filteredSearch[indexPath.row].name
+//        
+//        return cell
+//    }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) 
-
-        cell.textLabel?.text = filteredSearch[indexPath.row].name
+     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "idCell")
         
+        let cell = tableView.dequeueReusableCellWithIdentifier("idCell", forIndexPath: indexPath)
+        
+        
+        
+        if shouldShowSearchResults {
+            cell.textLabel?.text = filteredSearch[indexPath.row].name
+        }
+        else {
+            cell.textLabel?.text = items[indexPath.row].name
+        }
+     
         return cell
-    }
+     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        print("You selected cell #\(indexPath.row)!")
-    }
+//    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+//        print("You selected cell #\(indexPath.row)!")
+//    }
 }
