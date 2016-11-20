@@ -13,6 +13,7 @@ import Auth0
 class LoginViewController: UIViewController {
 
     
+    var check = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,8 +21,24 @@ class LoginViewController: UIViewController {
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(false)
+        if check == false {
+        let controller = A0Lock.sharedLock().newLockViewController()
         
-        
+        controller.closable = true
+        controller.onAuthenticationBlock = { profile, token in
+            
+            controller.dismissViewControllerAnimated(true, completion: nil)
+            
+            let secondViewController = self.storyboard!.instantiateViewControllerWithIdentifier("SafeSpot") as! ViewController
+            secondViewController.token = token
+            self.presentViewController(secondViewController, animated: true, completion: nil)
+        }
+        A0Lock.sharedLock().presentLockController(controller, fromController: self)
+        check = true
+            
+        } else {
+            self.dismissViewControllerAnimated(true, completion: {});
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -30,17 +47,5 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func presentLogin(sender: UIButton) {
-        let controller = A0Lock.sharedLock().newLockViewController()
-
-        controller.closable = true
-        controller.onAuthenticationBlock = { profile, token in
-
-            controller.dismissViewControllerAnimated(true, completion: nil)
-            
-            let secondViewController = self.storyboard!.instantiateViewControllerWithIdentifier("SafeSpot") as! ViewController
-            secondViewController.token = token
-            self.presentViewController(secondViewController, animated: true, completion: nil)
-        }
-        A0Lock.sharedLock().presentLockController(controller, fromController: self)
     }
 }
