@@ -62,20 +62,28 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         
         ref.observeSingleEventOfType(.Value, withBlock: { snapshot in
             if !snapshot.exists() { return }
-            let keysArray = snapshot.value?.allKeys as! [String]
+            let keysArray = snapshot.value!["places"]!!.allKeys as! [String]
             
-            let place = snapshot.value! as? NSDictionary
+            let place = snapshot.value!["places"]! as? NSDictionary
+            
             for each in keysArray {
+                let tags = place![each]!["tags"] as! String
+                let name = place![each]!["name"] as! String
+                let address = place![each]!["street_address"] as! String
+                let zipcode = place![each]!["zipcode"] as! Int
                 let lat = place![each]!["lat"] as! Double
                 let long = place![each]!["long"] as! Double
-                items.append(Search(tag: place![each]!["tags"], name: place![each]!["name"], address: place![each]!["street_address"], zipcode: place![each]!["zipcode"], lat: place![each]!["lat"], long: place![each]!["long"]))
+                
+                let newPlace = Search(tags: tags, name: name, address: address, zipcode: zipcode, lat: lat, long: long)
+                
+                self.items.append(newPlace)
                 
                 
                 let pinLocation = CLLocationCoordinate2DMake(lat,long)
                 // Drop a pin
                 let dropPin = MKPointAnnotation()
                 dropPin.coordinate = pinLocation
-                dropPin.title = each
+                dropPin.title = name
                 self.mapView.addAnnotation(dropPin)
             }
         })
@@ -83,9 +91,20 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     
     func filterContentForSearchText(searchText: String, scope: String = "All") {
         filteredSearch = items.filter { item in
-            return item.name.lowercaseString.containsString(searchText.lowercaseString) || item.address.lowercaseString.containsString(searchText.lowercaseString) || item.tag.lowercaseString.containsString(searchText.lowercaseString) || item.zipcode.lowercaseString.containsString(searchText.lowercaseString)
+            
+            return item.name.lowercaseString.containsString(searchText.lowercaseString) || item.address.lowercaseString.containsString(searchText.lowercaseString) || item.tags.lowercaseString.containsString(searchText.lowercaseString) || String(item.zipcode).containsString(searchText.lowercaseString)
+ 
+//            return false
         }
-        
+        mapView.removeAnnotations(mapView.annotations)
+        for item in filteredSearch{
+            let pinLocation = CLLocationCoordinate2DMake(item.lat,item.long)
+                // Drop a pin based on search
+                let dropPin = MKPointAnnotation()
+                dropPin.coordinate = pinLocation
+                dropPin.title = item.name
+                self.mapView.addAnnotation(dropPin)
+        }
 //        tableView.reloadData()
     }
     

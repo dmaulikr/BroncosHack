@@ -10,15 +10,24 @@ import Foundation
 
 // Place object
 class Search {
-    var tag : String
+    var tags : String
     var name : String
     var address : String
     var zipcode : Int
     var lat : Double
     var long : Double
 
-    init(tag: String, name: String, address: String, zipcode: Int, lat: Double, long: Double) {
-        self.tag = tag
+    init() {
+        self.tags = ""
+        self.name = ""
+        self.address = ""
+        self.zipcode = 0
+        self.lat = 0.0
+        self.long = 0.0
+    }
+    
+    init(tags: String, name: String, address: String, zipcode: Int, lat: Double, long: Double) {
+        self.tags = tags
         self.name = name
         self.address = address
         self.zipcode = zipcode
