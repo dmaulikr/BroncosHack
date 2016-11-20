@@ -11,7 +11,7 @@ import MapKit
 import CoreLocation
 import Firebase
 
-class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource {
+class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource, UISearchResultsUpdating, UISearchBarDelegate {
 
     @IBOutlet weak var mapView: MKMapView!
     let locationManager = CLLocationManager()
@@ -20,7 +20,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     var ref = FIRDatabase.database().reference()
     
     var filteredSearch = [Search]()
+    var filteredPlaceKeys = [String]()
     var items = [Search]()
+    var shouldShowSearchResults = false
     
     let searchController = UISearchController(searchResultsController: nil)
     
@@ -40,9 +42,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         
         // SEARCH BAR
         searchController.searchResultsUpdater = self
-        searchController.dimsBackgroundDuringPresentation = false
+        searchController.dimsBackgroundDuringPresentation = true
+        searchController.searchBar.placeholder = "Search here..."
+        searchController.searchBar.delegate = self
         definesPresentationContext = true
-        tableView.tableHeaderView = searchController.searchBar
+//        tableView.tableHeaderView = searchController.searchBar
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(ViewController.dismissKeyboard))
         view.addGestureRecognizer(tap)
         
@@ -63,7 +67,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         mapView.setRegion(region, animated: true)
         
         // CUSTOM HEADER IMAGE
-        searchBar.layer.zPosition = 1
+//        searchBar.layer.zPosition = 1
         let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 200, height: 70))
         imageView.contentMode = .ScaleAspectFit
         let image = UIImage(named: "navbar")
@@ -133,6 +137,48 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
 //        tableView.reloadData()
     }
     
+    func updateSearchResultsForSearchController(searchController: UISearchController) {
+        let searchText = searchController.searchBar.text
+        
+        filteredSearch = items.filter { item in
+            
+            return item.name.lowercaseString.containsString(searchText!.lowercaseString) || item.address.lowercaseString.containsString(searchText!.lowercaseString) || item.tags.lowercaseString.containsString(searchText!.lowercaseString) || String(item.zipcode).containsString(searchText!.lowercaseString)
+            
+            //            return false
+        }
+        mapView.removeAnnotations(mapView.annotations)
+        for item in filteredSearch{
+            print(item.name)
+            let pinLocation = CLLocationCoordinate2DMake(item.lat,item.long)
+            // Drop a pin based on search
+            let dropPin = MKPointAnnotation()
+            dropPin.coordinate = pinLocation
+            dropPin.title = item.name
+            self.mapView.addAnnotation(dropPin)
+        }
+        //        tableView.reloadData()
+    }
+    
+    func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
+        shouldShowSearchResults = true
+        tableView.reloadData()
+    }
+    
+    
+    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+        shouldShowSearchResults = false
+        tableView.reloadData()
+    }
+    
+    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+        if !shouldShowSearchResults {
+            shouldShowSearchResults = true
+            tableView.reloadData()
+        }
+        
+        searchController.searchBar.resignFirstResponder()
+    }
+    
     // LOCATION MANAGER DELEGATE METHOD
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
 //        let locValue:CLLocationCoordinate2D = manager.location!.coordinate
@@ -145,42 +191,24 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     }
 
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if searchController.active && searchController.searchBar.text != "" {
+        if shouldShowSearchResults {
             return filteredSearch.count
         }
-        return items.count
+        else {
+            return items.count
+        }
     }
     
+    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        
-        let cell:UITableViewCell = tableView.dequeueReusableCellWithIdentifier("cell")! as UITableViewCell
-        
-        let candy: Search
-        if searchController.active && searchController.searchBar.text != "" {
-            candy = filteredSearch[indexPath.row]
-        } else {
-            candy = items[indexPath.row]
-        }
-        
-        
-        
-        cell.textLabel?.text = candy.name
+        let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) 
+
+        cell.textLabel?.text = filteredSearch[indexPath.row].name
         
         return cell
-        
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         print("You selected cell #\(indexPath.row)!")
-    }
-}
-
-
-extension ViewController: UISearchResultsUpdating {
-    func updateSearchResultsForSearchController(searchController: UISearchController) {
-        filterContentForSearchText(searchController.searchBar.text!)
-        tableView.layer.zPosition = 1
-        self.view.addSubview(tableView)
-        
     }
 }
